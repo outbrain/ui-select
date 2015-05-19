@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.11.2 - 2015-03-17T04:08:46.474Z
+ * Version: 0.11.2 - 2015-05-19T08:11:11.397Z
  * License: MIT
  */
 
@@ -540,7 +540,9 @@ uis.controller('uiSelectCtrl',
   ctrl.clear = function($event) {
     ctrl.select(undefined);
     $event.stopPropagation();
-    ctrl.focusser[0].focus();
+    $timeout(function() {
+      ctrl.focusser[0].focus();
+    }, 0, false);
   };
 
   // Toggle dropdown
@@ -752,7 +754,19 @@ uis.directive('uiSelect',
       if (angular.isDefined(tAttrs.multiple))
         tElement.append("<ui-select-multiple/>").removeAttr('multiple');
       else
-        tElement.append("<ui-select-single/>");       
+        tElement.append("<ui-select-single/>");
+
+      if (angular.isDefined(tAttrs.tooltipContent)) {
+        tElement.find("input")
+            .attr({
+              "tooltips": "tooltips",
+              "tooltip-class": "tooltip-context",
+              "tooltip-show-trigger": "focus",
+              "tooltip-hide-trigger": "blur",
+              "tooltip-content": tAttrs.tooltipContent,
+              "tooltip-side": "left"
+            });
+      }
 
       return function(scope, element, attrs, ctrls, transcludeFn) {
 

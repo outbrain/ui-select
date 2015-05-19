@@ -21,7 +21,19 @@ uis.directive('uiSelect',
       if (angular.isDefined(tAttrs.multiple))
         tElement.append("<ui-select-multiple/>").removeAttr('multiple');
       else
-        tElement.append("<ui-select-single/>");       
+        tElement.append("<ui-select-single/>");
+
+      if (angular.isDefined(tAttrs.tooltipContent)) {
+        tElement.find("input")
+            .attr({
+              "tooltips": "tooltips",
+              "tooltip-class": "tooltip-context",
+              "tooltip-show-trigger": "focus",
+              "tooltip-hide-trigger": "blur",
+              "tooltip-content": tAttrs.tooltipContent,
+              "tooltip-side": "left"
+            });
+      }
 
       return function(scope, element, attrs, ctrls, transcludeFn) {
 
