@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.11.2 - 2015-05-19T08:11:11.397Z
+ * Version: 0.11.2 - 2015-05-19T10:41:25.397Z
  * License: MIT
  */
 
@@ -671,6 +671,11 @@ uis.controller('uiSelectCtrl',
 
     if(KEY.isVerticalMovement(key) && ctrl.items.length > 0){
       _ensureHighlightVisible();
+    }
+
+    if (key === KEY.ENTER || key === KEY.ESC) {
+      e.preventDefault();
+      e.stopPropagation();
     }
 
   });
