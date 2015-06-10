@@ -1,4 +1,4 @@
-<div class="ui-select-container selectize-control single" ng-class="{'open': $select.open}">
+<div class="ui-select-container selectize-control single" ng-class="{'open': $select.open, 'searchable': $select.searchEnabled, 'not-searchable': !$select.searchEnabled}">
   <div class="selectize-input"
        ng-class="{'focus': $select.open, 'disabled': $select.disabled, 'selectize-focus' : $select.focus}"
        ng-click="$select.activate()">
