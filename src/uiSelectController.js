@@ -518,4 +518,5 @@ uis.controller('uiSelectCtrl',
     ctrl.searchInput.off('keyup keydown tagged blur paste');
   });
 
+  $scope.$on('uis:select', _resetSearchInput);
 }]);
