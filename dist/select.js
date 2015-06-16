@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-06-15T08:55:14.082Z
+ * Version: 0.12.0 - 2015-06-16T07:56:55.489Z
  * License: MIT
  */
 
@@ -755,6 +755,7 @@ uis.controller('uiSelectCtrl',
     ctrl.searchInput.off('keyup keydown tagged blur paste');
   });
 
+  $scope.$on('uis:select', _resetSearchInput);
 }]);
 
 uis.directive('uiSelect',
