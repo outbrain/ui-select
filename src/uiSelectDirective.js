@@ -31,7 +31,7 @@ uis.directive('uiSelect',
               "tooltip-show-trigger": "focus",
               "tooltip-hide-trigger": "blur",
               "tooltip-content": tAttrs.tooltipContent,
-              "tooltip-side": "right"
+              "tooltip-side": tAttrs.tooltipSide || "right"
             });
       }
 

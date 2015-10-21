@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-10-21T11:57:29.785Z
+ * Version: 0.12.0 - 2015-10-21T12:06:09.578Z
  * License: MIT
  */
 
@@ -791,7 +791,7 @@ uis.directive('uiSelect',
               "tooltip-show-trigger": "focus",
               "tooltip-hide-trigger": "blur",
               "tooltip-content": tAttrs.tooltipContent,
-              "tooltip-side": "right"
+              "tooltip-side": tAttrs.tooltipSide || "right"
             });
       }
 
