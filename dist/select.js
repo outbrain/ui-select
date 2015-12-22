@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-10-21T12:06:09.578Z
+ * Version: 0.12.0 - 2015-12-22T13:00:24.699Z
  * License: MIT
  */
 
@@ -329,7 +329,7 @@ uis.controller('uiSelectCtrl',
       $timeout(function() {
         ctrl.search = initSearchValue || ctrl.search;
         ctrl.searchInput[0].focus();
-      });
+      }, 100);
     }
   };
 
