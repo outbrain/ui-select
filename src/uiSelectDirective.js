@@ -24,15 +24,22 @@ uis.directive('uiSelect',
         tElement.append("<ui-select-single/>");
 
       if (angular.isDefined(tAttrs.tooltipContent)) {
-        tElement.find("input")
-            .attr({
-              "tooltips": "tooltips",
-              "tooltip-class": "tooltip-context",
-              "tooltip-show-trigger": "focus",
-              "tooltip-hide-trigger": "blur",
-              "tooltip-content": tAttrs.tooltipContent,
-              "tooltip-side": tAttrs.tooltipSide || "right"
-            });
+        var inputAttr = {
+          "tooltips": "tooltips",
+          "tooltip-class": "tooltip-context",
+          "tooltip-show-trigger": tAttrs.tooltipShowTrigger || "focus",
+          "tooltip-hide-trigger": tAttrs.tooltipHideTrigger || "blur",
+          "tooltip-content": tAttrs.tooltipContent,
+          "tooltip-side": tAttrs.tooltipSide || "right",
+          "tooltip-try": tAttrs.tooltipTry || "true",
+          "tooltip-bind-html": tAttrs.tooltipBindHtml || "true",
+          "tooltip-hide-delay": tAttrs.tooltipHideDelay || "0"
+        };
+        if (angular.isDefined(tAttrs.inputReadonly)) {
+          inputAttr.readonly = "true";
+        }
+
+        tElement.find("input").attr(inputAttr);
       }
 
       return function(scope, element, attrs, ctrls, transcludeFn) {
