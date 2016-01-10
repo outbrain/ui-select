@@ -5,8 +5,8 @@
  * put as much logic in the controller (instead of the link functions) as possible so it can be easily tested.
  */
 uis.controller('uiSelectCtrl',
-  ['$scope', '$element', '$timeout', '$filter', 'uisRepeatParser', 'uiSelectMinErr', 'uiSelectConfig',
-  function($scope, $element, $timeout, $filter, RepeatParser, uiSelectMinErr, uiSelectConfig) {
+  ['$scope', '$element', '$timeout', '$filter', '$q', '$log', 'uisRepeatParser', 'uiSelectMinErr', 'uiSelectConfig',
+  function($scope, $element, $timeout, $filter, $q, $log, RepeatParser, uiSelectMinErr, uiSelectConfig) {
 
   var ctrl = this;
 
@@ -284,12 +284,23 @@ uis.controller('uiSelectCtrl',
           }
         }
 
-        $scope.$broadcast('uis:select', item);
+        if (!ctrl.selectWhen) {
+          $scope.$broadcast('uis:select', item);
+        }
 
         var locals = {};
         locals[ctrl.parserResult.itemName] = item;
 
         $timeout(function(){
+          if (ctrl.selectWhen) {
+            ctrl.selectWhen($scope, {
+              $item: item,
+              $model: ctrl.parserResult.modelMapper($scope, locals)
+            }).then(function () {
+              $scope.$broadcast('uis:select', item);
+            });
+          }
+
           ctrl.onSelectCallback($scope, {
             $item: item,
             $model: ctrl.parserResult.modelMapper($scope, locals)
