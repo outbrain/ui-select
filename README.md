@@ -9,6 +9,9 @@ AngularJS-native version of [Select2](http://ivaynberg.github.io/select2/) and [
 - [Examples](https://github.com/angular-ui/ui-select/blob/master/examples)
 - [Documentation](https://github.com/angular-ui/ui-select/wiki)
 
+## Last Changes
+
+- Check [CHANGELOG.md](/CHANGELOG.md)
 
 ## Features
 
@@ -33,7 +36,7 @@ For the roadmap, check [issue #3](https://github.com/angular-ui/ui-select/issues
 * `gulp` to jshint, build and test
 * `gulp build` to jshint and build
 * `gulp test` for one-time test with karma (also build and jshint)
-* `gulp watch` to watch src files to jshin, build and test when changed
+* `gulp watch` to watch src files to jshint, build and test when changed
 
 ## Contributing
 
