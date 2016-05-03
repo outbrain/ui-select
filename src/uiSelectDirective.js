@@ -17,6 +17,14 @@ uis.directive('uiSelect',
     controllerAs: '$select',
     compile: function(tElement, tAttrs) {
 
+      // Allow setting ngClass on uiSelect
+      var match = /{(.*)}\s*{(.*)}/.exec(tAttrs.ngClass);
+      if(match) {
+        var combined = '{'+ match[1] +', '+ match[2] +'}';
+        tAttrs.ngClass = combined;
+        tElement.attr('ng-class', combined);
+      }
+
       //Multiple or Single depending if multiple attribute presence
       if (angular.isDefined(tAttrs.multiple))
         tElement.append('<ui-select-multiple/>').removeAttr('multiple');
@@ -63,6 +71,11 @@ uis.directive('uiSelect',
           }
         }();
 
+        scope.$watch('skipFocusser', function() {
+            var skipFocusser = scope.$eval(attrs.skipFocusser);
+            $select.skipFocusser = skipFocusser !== undefined ? skipFocusser : uiSelectConfig.skipFocusser;
+        });
+
         $select.onSelectCallback = $parse(attrs.onSelect);
         $select.onRemoveCallback = $parse(attrs.onRemove);
 
@@ -106,6 +119,10 @@ uis.directive('uiSelect',
           // $eval() is needed otherwise we get a string instead of a boolean
           var resetSearchInput = scope.$eval(attrs.resetSearchInput);
           $select.resetSearchInput = resetSearchInput !== undefined ? resetSearchInput : true;
+        });
+
+        attrs.$observe('paste', function() {
+          $select.paste = scope.$eval(attrs.paste);
         });
 
         attrs.$observe('tagging', function() {
@@ -173,11 +190,16 @@ uis.directive('uiSelect',
           }
 
           if (!contains && !$select.clickTriggeredSelect) {
-            //Will lose focus only with certain targets
-            var focusableControls = ['input','button','textarea'];
-            var targetController = angular.element(e.target).controller('uiSelect'); //To check if target is other ui-select
-            var skipFocusser = targetController && targetController !== $select; //To check if target is other ui-select
-            if (!skipFocusser) skipFocusser =  ~focusableControls.indexOf(e.target.tagName.toLowerCase()); //Check if target is input, button or textarea
+            var skipFocusser;
+            if (!$select.skipFocusser) {
+              //Will lose focus only with certain targets
+              var focusableControls = ['input','button','textarea','select'];
+              var targetController = angular.element(e.target).controller('uiSelect'); //To check if target is other ui-select
+              skipFocusser = targetController && targetController !== $select; //To check if target is other ui-select
+              if (!skipFocusser) skipFocusser =  ~focusableControls.indexOf(e.target.tagName.toLowerCase()); //Check if target is input, button or textarea
+            } else {
+              skipFocusser = true;
+            }
             $select.close(skipFocusser);
             scope.$digest();
           }
@@ -215,6 +237,13 @@ uis.directive('uiSelect',
             throw uiSelectMinErr('transcluded', "Expected 1 .ui-select-choices but got '{0}'.", transcludedChoices.length);
           }
           element.querySelectorAll('.ui-select-choices').replaceWith(transcludedChoices);
+
+          var transcludedNoChoice = transcluded.querySelectorAll('.ui-select-no-choice');
+          transcludedNoChoice.removeAttr('ui-select-no-choice'); //To avoid loop in case directive as attr
+          transcludedNoChoice.removeAttr('data-ui-select-no-choice'); // Properly handle HTML5 data-attributes
+          if (transcludedNoChoice.length == 1) {
+            element.querySelectorAll('.ui-select-no-choice').replaceWith(transcludedNoChoice);
+          }
         });
 
         // Support for appending the select field to the body when its open
@@ -276,6 +305,9 @@ uis.directive('uiSelect',
           element[0].style.left = '';
           element[0].style.top = '';
           element[0].style.width = originalWidth;
+
+          // Set focus back on to the moved element
+          $select.setFocus();
         }
 
         // Hold on to a reference to the .ui-select-dropdown element for direction support.
@@ -330,7 +362,7 @@ uis.directive('uiSelect',
 
               if ($select.dropdownPosition === 'up'){
                   //Go UP
-                  setDropdownPosUp(offset, offsetDropdown);
+                  setDropdownPosUp();
 
               }else{ //AUTO
 
