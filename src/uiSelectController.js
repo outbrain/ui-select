@@ -132,7 +132,7 @@ uis.controller('uiSelectCtrl',
             ctrl.$animate.off('removeClass', searchInput[0], animateHandler);
             $timeout(function () {
               ctrl.focusSearchInput(initSearchValue);
-            });
+            }, 50);
           } else if (phase === 'close') {
             // Only focus input after the animation has finished
             ctrl.$animate.off('enter', container[0], animateHandler);

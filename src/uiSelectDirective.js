@@ -167,6 +167,14 @@ uis.directive('uiSelect',
           });
         }
 
+        if (angular.isDefined(attrs.clearOn)){
+          scope.$on(attrs.clearOn, function() {
+              $timeout(function(){
+                $select.activate();
+              });
+          });
+        }
+
         //Gets focus based on scope event name (e.g. focus-on='SomeEventName')
         if (angular.isDefined(attrs.focusOn)){
           scope.$on(attrs.focusOn, function() {
