@@ -82,7 +82,11 @@ uis.directive('uiSelect',
         if ('selectWhen' in attrs) {
           $select.selectWhen = $parse(attrs.selectWhen);
         }
-        
+
+        if ('disableDropdown' in attrs) {
+          $select.disableDropdown = $parse(attrs.disableDropdown);
+        }
+
         //Limit the number of selections allowed
         $select.limit = (angular.isDefined(attrs.limit)) ? parseInt(attrs.limit, 10) : undefined;
 
