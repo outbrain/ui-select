@@ -27,7 +27,7 @@ uis.controller('uiSelectCtrl',
   ctrl.items = []; //All available choices
 
   ctrl.open = false;
-  ctrl.disableDropdown = false;
+  ctrl.disableDefaultDropdown = false;
   ctrl.focus = false;
   ctrl.disabled = false;
   ctrl.selected = undefined;
@@ -440,7 +440,7 @@ uis.controller('uiSelectCtrl',
 
   // Toggle dropdown
   ctrl.toggle = function(e) {
-    if (ctrl.open && (!ctrl.disableDropdown || !ctrl.disableDropdown())) {
+    if (ctrl.open && (!ctrl.disableDefaultDropdown || !ctrl.disableDefaultDropdown())) {
       ctrl.close();
       e.preventDefault();
       e.stopPropagation();

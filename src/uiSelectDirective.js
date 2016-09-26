@@ -83,8 +83,8 @@ uis.directive('uiSelect',
           $select.selectWhen = $parse(attrs.selectWhen);
         }
 
-        if ('disableDropdown' in attrs) {
-          $select.disableDropdown = $parse(attrs.disableDropdown);
+        if ('disableDefaultDropdown' in attrs) {
+          $select.disableDefaultDropdown = $parse(attrs.disableDefaultDropdown);
         }
 
         //Limit the number of selections allowed
