@@ -445,6 +445,9 @@ uis.controller('uiSelectCtrl',
       e.preventDefault();
       e.stopPropagation();
     } else {
+      if(ctrl.open) {
+        ctrl.open = false;
+      }
       ctrl.activate();
     }
   };

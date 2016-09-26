@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.16.1 - 2016-09-26T14:02:56.102Z
+ * Version: 0.16.1 - 2016-09-26T21:20:27.025Z
  * License: MIT
  */
 
@@ -709,6 +709,9 @@ uis.controller('uiSelectCtrl',
       e.preventDefault();
       e.stopPropagation();
     } else {
+      if(ctrl.open) {
+        ctrl.open = false;
+      }
       ctrl.activate();
     }
   };
